@@ -9,13 +9,21 @@ r = requests.get(zp)
 z = zipfile.ZipFile(io.BytesIO(r.content))
 z.extractall()
 
-# redit setup
-redis_host = "localhost"
+redis_host = os.environ.get('REDIS_HOST', 'localhost')   
 redis_port = '6379'
 redis_password = ""
+CHANNEL_LAYERS = {
+    "default": {
+
+        "BACKEND": "asgi_redis.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [(redis_host, 6379)],
+        },
+        "ROUTING": "multichat.routing.channel_routing",
+    },
+}
 import csv
 names=[]
-
 #*********************************************class to push into redis**************************
 
 
