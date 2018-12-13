@@ -10,18 +10,9 @@ z = zipfile.ZipFile(io.BytesIO(r.content))
 z.extractall()
 
 redis_host = os.environ.get('REDIS_HOST', 'localhost')   
-redis_port = '6379'
-redis_password = ""
-CHANNEL_LAYERS = {
-    "default": {
 
-        "BACKEND": "asgi_redis.RedisChannelLayer",
-        "CONFIG": {
-            "hosts": [(redis_host, 6379)],
-        },
-        "ROUTING": "multichat.routing.channel_routing",
-    },
-}
+redis_port = 'localhost'
+
 import csv
 names=[]
 #*********************************************class to push into redis**************************
@@ -31,7 +22,7 @@ class zeroth:
     def hello_redis(self):  
     
         try:
-            r = redis.StrictRedis(host=redis_host, port=redis_port, password=redis_password, decode_responses=True) 
+            r = redis.StrictRedis(host=redis_host,  password="", decode_responses=True) 
             line=csv.reader(open('EQ121218.CSV','r'))
             line=list(line)
             del line[0]   
